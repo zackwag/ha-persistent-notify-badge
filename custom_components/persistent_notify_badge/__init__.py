@@ -4,10 +4,12 @@ import logging
 from datetime import datetime, timezone
 
 from homeassistant.components.persistent_notification import (
-    EVENT_PERSISTENT_NOTIFICATIONS_UPDATED,
+    UpdateType,
+    async_get as pn_async_get,
+    async_register_callback,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import Event, HomeAssistant, callback
+from homeassistant.core import HomeAssistant, callback
 
 from .badge import async_send_badge
 from .const import (
@@ -47,14 +49,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await async_send_badge(hass, targets, store.count())
 
     @callback
-    def _handle_notifications_updated(event: Event) -> None:
+    def _handle_notifications_updated(
+        update_type: UpdateType, notifications: dict
+    ) -> None:
         hass.async_create_task(_async_sync_notifications(hass, entry, store))
 
     entry.async_on_unload(
-        hass.bus.async_listen(
-            EVENT_PERSISTENT_NOTIFICATIONS_UPDATED,
-            _handle_notifications_updated,
-        )
+        async_register_callback(hass, _handle_notifications_updated)
     )
 
     entry.async_on_unload(entry.add_update_listener(_async_options_updated))
@@ -65,11 +66,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 async def _async_sync_notifications(
     hass: HomeAssistant, entry: ConfigEntry, store: NotificationStore
 ) -> None:
-    """Diff HA's current notifications against storage; add new, remove dismissed."""
-    from homeassistant.components.persistent_notification import (
-        async_get as pn_async_get,
-    )
-
     current: dict = pn_async_get(hass)
     stored = store.get_all()
 
