@@ -1,7 +1,7 @@
 {
   "domain": "persistent_notify_badge",
   "name": "Persistent Notify Badge",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "config_flow": true,
   "documentation": "https://github.com/zackwag/ha-persistent-notify-badge",
   "issue_tracker": "https://github.com/zackwag/ha-persistent-notify-badge/issues",

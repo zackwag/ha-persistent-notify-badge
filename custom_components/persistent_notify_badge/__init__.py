@@ -10,6 +10,7 @@ from homeassistant.components.persistent_notification import (
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.dispatcher import async_dispatcher_send
 
 from .badge import async_send_badge
 from .const import (
@@ -19,10 +20,13 @@ from .const import (
     ATTR_TITLE,
     CONF_NOTIFY_TARGETS,
     DOMAIN,
+    SIGNAL_COUNT_CHANGED,
 )
 from .storage import NotificationStore
 
 _LOGGER = logging.getLogger(__name__)
+
+PLATFORMS = ["sensor"]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -52,6 +56,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             notif.get(ATTR_TITLE) or None,
             notif_id,
         )
+
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     # Send initial badge with count from storage
     await async_send_badge(hass, _get_targets(entry), store.count())
@@ -95,6 +101,7 @@ async def _async_handle_update(
                 changed = True
 
     if changed:
+        async_dispatcher_send(hass, SIGNAL_COUNT_CHANGED)
         await async_send_badge(hass, _get_targets(entry), store.count())
 
 
@@ -103,6 +110,7 @@ async def _async_options_updated(hass: HomeAssistant, entry: ConfigEntry) -> Non
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     hass.data[DOMAIN].pop(entry.entry_id, None)
     return True
 

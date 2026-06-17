@@ -8,3 +8,5 @@ ATTR_NOTIFICATION_ID = "notification_id"
 ATTR_TITLE = "title"
 ATTR_MESSAGE = "message"
 ATTR_CREATED_AT = "created_at"
+
+SIGNAL_COUNT_CHANGED = f"{DOMAIN}_count_changed"
