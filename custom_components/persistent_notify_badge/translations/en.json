@@ -1,0 +1,30 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Persistent Notify Badge",
+        "description": "Enter one or more Home Assistant notify service targets (comma-separated), e.g. `notify.mobile_app_my_phone`",
+        "data": {
+          "notify_targets": "Notify targets"
+        }
+      }
+    },
+    "error": {
+      "no_targets": "At least one notify target is required."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Update notify targets",
+        "description": "Enter one or more notify service targets (comma-separated).",
+        "data": {
+          "notify_targets": "Notify targets"
+        }
+      }
+    },
+    "error": {
+      "no_targets": "At least one notify target is required."
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "domain": "persistent_notify_badge",
+  "name": "Persistent Notify Badge",
+  "version": "1.0.0",
+  "config_flow": true,
+  "documentation": "https://github.com/zackwag/ha-persistent-notify-badge",
+  "issue_tracker": "https://github.com/zackwag/ha-persistent-notify-badge/issues",
+  "codeowners": ["@zackwag"],
+  "iot_class": "local_push",
+  "dependencies": ["persistent_notification", "mobile_app"],
+  "requirements": []
+}
