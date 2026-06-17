@@ -1,7 +1,6 @@
 {
   "name": "Persistent Notify Badge",
-  "category": "integration",
-  "documentation": "https://github.com/zackwag/ha-persistent-notify-badge",
-  "issue_tracker": "https://github.com/zackwag/ha-persistent-notify-badge/issues",
-  "codeowners": ["@zackwag"]
+  "render_readme": true,
+  "hacs": "2.0.0",
+  "homeassistant": "2024.1.0"
 }
