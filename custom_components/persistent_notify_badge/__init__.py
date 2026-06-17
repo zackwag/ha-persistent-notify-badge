@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 
 from homeassistant.components.persistent_notification import (
     UpdateType,
-    async_get as pn_async_get,
+    async_create as pn_async_create,
     async_register_callback,
 )
 from homeassistant.config_entries import ConfigEntry
@@ -31,65 +31,71 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = store
 
-    # Restore persisted notifications into persistent_notification on reboot
-    for notif_id, notif in store.get_all().items():
-        await hass.services.async_call(
-            "persistent_notification",
-            "create",
-            {
-                "notification_id": notif_id,
-                "title": notif.get(ATTR_TITLE, ""),
-                "message": notif.get(ATTR_MESSAGE, ""),
-            },
-            blocking=False,
-        )
-
-    # Send initial badge count
-    targets = _get_targets(entry)
-    await async_send_badge(hass, targets, store.count())
-
     @callback
     def _handle_notifications_updated(
         update_type: UpdateType, notifications: dict
     ) -> None:
-        hass.async_create_task(_async_sync_notifications(hass, entry, store))
+        hass.async_create_task(
+            _async_handle_update(hass, entry, store, update_type, notifications)
+        )
 
     entry.async_on_unload(
         async_register_callback(hass, _handle_notifications_updated)
     )
 
-    entry.async_on_unload(entry.add_update_listener(_async_options_updated))
+    # Restore persisted notifications — triggers ADDED callbacks which are
+    # no-ops for already-stored IDs, so storage stays consistent
+    for notif_id, notif in store.get_all().items():
+        pn_async_create(
+            hass,
+            notif.get(ATTR_MESSAGE, ""),
+            notif.get(ATTR_TITLE) or None,
+            notif_id,
+        )
 
+    # Send initial badge with count from storage
+    await async_send_badge(hass, _get_targets(entry), store.count())
+
+    entry.async_on_unload(entry.add_update_listener(_async_options_updated))
     return True
 
 
-async def _async_sync_notifications(
-    hass: HomeAssistant, entry: ConfigEntry, store: NotificationStore
+async def _async_handle_update(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    store: NotificationStore,
+    update_type: UpdateType,
+    notifications: dict,
 ) -> None:
-    current: dict = pn_async_get(hass)
+    changed = False
     stored = store.get_all()
 
-    # Add notifications not yet in storage
-    for notif_id, notif in current.items():
-        if notif_id not in stored:
-            await store.async_add(
-                notif_id,
-                {
-                    ATTR_NOTIFICATION_ID: notif_id,
-                    ATTR_TITLE: notif.get("title", ""),
-                    ATTR_MESSAGE: notif.get("message", ""),
-                    ATTR_CREATED_AT: datetime.now(timezone.utc).isoformat(),
-                },
-            )
+    if update_type == UpdateType.ADDED:
+        for notif_id, notif in notifications.items():
+            if notif_id not in stored:
+                created_at = notif.get("created_at")
+                await store.async_add(
+                    notif_id,
+                    {
+                        ATTR_NOTIFICATION_ID: notif_id,
+                        ATTR_TITLE: notif.get("title", ""),
+                        ATTR_MESSAGE: notif.get("message", ""),
+                        ATTR_CREATED_AT: (
+                            created_at.isoformat()
+                            if hasattr(created_at, "isoformat")
+                            else datetime.now(timezone.utc).isoformat()
+                        ),
+                    },
+                )
+                changed = True
 
-    # Remove notifications that were dismissed
-    for notif_id in list(stored.keys()):
-        if notif_id not in current:
-            await store.async_remove(notif_id)
+    elif update_type == UpdateType.REMOVED:
+        for notif_id in notifications:
+            if await store.async_remove(notif_id):
+                changed = True
 
-    # Badge update
-    targets = _get_targets(entry)
-    await async_send_badge(hass, targets, store.count())
+    if changed:
+        await async_send_badge(hass, _get_targets(entry), store.count())
 
 
 async def _async_options_updated(hass: HomeAssistant, entry: ConfigEntry) -> None:
