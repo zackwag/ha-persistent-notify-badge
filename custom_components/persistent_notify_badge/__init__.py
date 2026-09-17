@@ -5,8 +5,10 @@ from datetime import datetime, timezone
 
 from homeassistant.components.persistent_notification import (
     UpdateType,
-    async_create as pn_async_create,
     async_register_callback,
+)
+from homeassistant.components.persistent_notification import (
+    async_create as pn_async_create,
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
@@ -36,16 +38,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = store
 
     @callback
-    def _handle_notifications_updated(
-        update_type: UpdateType, notifications: dict
-    ) -> None:
-        hass.async_create_task(
-            _async_handle_update(hass, entry, store, update_type, notifications)
-        )
+    def _handle_notifications_updated(update_type: UpdateType, notifications: dict) -> None:
+        hass.async_create_task(_async_handle_update(hass, entry, store, update_type, notifications))
 
-    entry.async_on_unload(
-        async_register_callback(hass, _handle_notifications_updated)
-    )
+    entry.async_on_unload(async_register_callback(hass, _handle_notifications_updated))
 
     # Restore persisted notifications — triggers ADDED callbacks which are
     # no-ops for already-stored IDs, so storage stays consistent

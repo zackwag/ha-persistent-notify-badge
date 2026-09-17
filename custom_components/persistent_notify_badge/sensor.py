@@ -40,9 +40,7 @@ class NotificationCountSensor(SensorEntity):
 
     async def async_added_to_hass(self) -> None:
         self.async_on_remove(
-            async_dispatcher_connect(
-                self.hass, SIGNAL_COUNT_CHANGED, self._handle_count_changed
-            )
+            async_dispatcher_connect(self.hass, SIGNAL_COUNT_CHANGED, self._handle_count_changed)
         )
 
     @callback
