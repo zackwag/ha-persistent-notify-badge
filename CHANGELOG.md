@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/zackwag/ha-persistent-notify-badge/compare/v1.1.1...v1.2.0) (2026-09-17)
+
+
+### Features
+
+* **ci:** add ruff lint + format check ([#10](https://github.com/zackwag/ha-persistent-notify-badge/issues/10)) ([ea539a3](https://github.com/zackwag/ha-persistent-notify-badge/commit/ea539a3a69fe51428b37d7015970502719f5a270))
+
 ## [1.1.1](https://github.com/zackwag/ha-persistent-notify-badge/compare/v1.1.0...v1.1.1) (2026-09-17)
 
 
