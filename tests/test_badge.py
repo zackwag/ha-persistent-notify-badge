@@ -1,7 +1,8 @@
 """Tests for badge sending logic."""
+
 from __future__ import annotations
 
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
@@ -19,11 +20,19 @@ class TestAsyncSendBadge:
         assert hass.services.async_call.call_count == 2
 
         first_call = hass.services.async_call.call_args_list[0]
-        assert first_call[0] == ("notify", "mobile_app_phone", {"message": "", "data": {"push": {"badge": 5}}})
+        assert first_call[0] == (
+            "notify",
+            "mobile_app_phone",
+            {"message": "", "data": {"push": {"badge": 5}}},
+        )
         assert first_call[1] == {"blocking": False}
 
         second_call = hass.services.async_call.call_args_list[1]
-        assert second_call[0] == ("notify", "mobile_app_tablet", {"message": "", "data": {"push": {"badge": 5}}})
+        assert second_call[0] == (
+            "notify",
+            "mobile_app_tablet",
+            {"message": "", "data": {"push": {"badge": 5}}},
+        )
 
     @pytest.mark.asyncio
     async def test_handles_dotted_service_name(self):

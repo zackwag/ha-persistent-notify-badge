@@ -1,4 +1,5 @@
 """Tests for config flow and options flow."""
+
 from __future__ import annotations
 
 from unittest.mock import MagicMock
@@ -9,7 +10,6 @@ from custom_components.persistent_notify_badge.config_flow import (
     PersistentNotifyBadgeConfigFlow,
     PersistentNotifyBadgeOptionsFlow,
     _parse_targets,
-    _targets_schema,
 )
 from custom_components.persistent_notify_badge.const import CONF_NOTIFY_TARGETS
 
@@ -97,9 +97,7 @@ class TestOptionsFlow:
 
         flow = PersistentNotifyBadgeOptionsFlow(entry)
 
-        result = await flow.async_step_init(
-            {CONF_NOTIFY_TARGETS: "mobile_app_tablet"}
-        )
+        result = await flow.async_step_init({CONF_NOTIFY_TARGETS: "mobile_app_tablet"})
 
         assert result["type"] == "create_entry"
         assert result["data"][CONF_NOTIFY_TARGETS] == ["mobile_app_tablet"]

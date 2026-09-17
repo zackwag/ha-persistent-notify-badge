@@ -1,9 +1,8 @@
 """Tests for the notification count sensor entity."""
+
 from __future__ import annotations
 
-from unittest.mock import AsyncMock, MagicMock
-
-import pytest
+from unittest.mock import MagicMock
 
 from custom_components.persistent_notify_badge.sensor import NotificationCountSensor
 from custom_components.persistent_notify_badge.storage import NotificationStore
