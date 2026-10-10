@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import logging
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from homeassistant.components.persistent_notification import (
     UpdateType,
@@ -85,7 +85,7 @@ async def _async_handle_update(
                         ATTR_CREATED_AT: (
                             created_at.isoformat()
                             if hasattr(created_at, "isoformat")
-                            else datetime.now(timezone.utc).isoformat()
+                            else datetime.now(UTC).isoformat()
                         ),
                     },
                 )
