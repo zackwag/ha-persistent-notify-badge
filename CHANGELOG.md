@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/zackwag/ha-persistent-notify-badge/compare/v1.2.1...v1.2.2) (2026-10-10)
+
+
+### Miscellaneous Chores
+
+* stop tracking __pycache__ and ignore Python caches ([#15](https://github.com/zackwag/ha-persistent-notify-badge/issues/15)) ([7ebac7b](https://github.com/zackwag/ha-persistent-notify-badge/commit/7ebac7bab306f57c14c14d678cdc4901111205d6))
+
 ## [1.2.1](https://github.com/zackwag/ha-persistent-notify-badge/compare/v1.2.0...v1.2.1) (2026-10-10)
 
 
