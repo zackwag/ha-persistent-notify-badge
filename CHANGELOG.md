@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/zackwag/ha-persistent-notify-badge/compare/v1.2.0...v1.2.1) (2026-10-10)
+
+
+### Miscellaneous Chores
+
+* **deps:** bump the actions group with 3 updates ([#12](https://github.com/zackwag/ha-persistent-notify-badge/issues/12)) ([15348e3](https://github.com/zackwag/ha-persistent-notify-badge/commit/15348e326f519ea66bc0a6ba246dc4501078699d))
+
 ## [1.2.0](https://github.com/zackwag/ha-persistent-notify-badge/compare/v1.1.1...v1.2.0) (2026-09-17)
 
 
