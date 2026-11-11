@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.6](https://github.com/zackwag/ha-persistent-notify-badge/compare/v1.2.5...v1.2.6) (2026-11-11)
+
+
+### Miscellaneous Chores
+
+* fix dependabot commit-message prefixes for conventional commits ([#24](https://github.com/zackwag/ha-persistent-notify-badge/issues/24)) ([6a9667d](https://github.com/zackwag/ha-persistent-notify-badge/commit/6a9667d51be20dc6ffca18473d43639f401bb509))
+
 ## [1.2.5](https://github.com/zackwag/ha-persistent-notify-badge/compare/v1.2.4...v1.2.5) (2026-11-04)
 
 
