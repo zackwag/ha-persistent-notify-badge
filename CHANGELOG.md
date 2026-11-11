@@ -5,6 +5,7 @@
 
 ### Miscellaneous Chores
 
+* **deps:** bump ruff from 0.17.3 to 0.17.4 in the pip group ([#26](https://github.com/zackwag/ha-persistent-notify-badge/issues/26)) ([7bb05e1](https://github.com/zackwag/ha-persistent-notify-badge/commit/7bb05e17fd071ef535e87e8e32ae8305ce7c8f0e))
 * fix dependabot commit-message prefixes for conventional commits ([#24](https://github.com/zackwag/ha-persistent-notify-badge/issues/24)) ([6a9667d](https://github.com/zackwag/ha-persistent-notify-badge/commit/6a9667d51be20dc6ffca18473d43639f401bb509))
 
 ## [1.2.5](https://github.com/zackwag/ha-persistent-notify-badge/compare/v1.2.4...v1.2.5) (2026-11-04)
