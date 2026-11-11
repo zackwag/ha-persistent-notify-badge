@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.7](https://github.com/zackwag/ha-persistent-notify-badge/compare/v1.2.6...v1.2.7) (2026-11-11)
+
+
+### Miscellaneous Chores
+
+* **main:** release 1.2.6 ([#27](https://github.com/zackwag/ha-persistent-notify-badge/issues/27)) ([e2d0953](https://github.com/zackwag/ha-persistent-notify-badge/commit/e2d095372ed1c60424a0d0a0cc29f081b1931ebc))
+
 ## [1.2.6](https://github.com/zackwag/ha-persistent-notify-badge/compare/v1.2.5...v1.2.6) (2026-11-11)
 
 
