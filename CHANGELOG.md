@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.8](https://github.com/zackwag/ha-persistent-notify-badge/compare/v1.2.7...v1.2.8) (2026-11-18)
+
+
+### Miscellaneous Chores
+
+* **deps:** bump ruff from 0.17.4 to 0.17.5 in the pip group ([#29](https://github.com/zackwag/ha-persistent-notify-badge/issues/29)) ([829a0d6](https://github.com/zackwag/ha-persistent-notify-badge/commit/829a0d69ddce27515f40290f76795cb6c84fba71))
+
 ## [1.2.7](https://github.com/zackwag/ha-persistent-notify-badge/compare/v1.2.6...v1.2.7) (2026-11-11)
 
 
